@@ -1,65 +1,42 @@
 cr equ 13
 lf equ 10
 SYS_EXIT equ 1
-SYS_READ equ 3
 SYS_WRITE equ 4
-STDIN equ 0
 STDOUT equ 1
-STDERR equ 2
-ytre equ 20
+ytre equ 0
 indre equ 10
-
-section .data
-    crlf db cr, lf
-    crlflen equ $ - crlf
 
 section	.bss
     num resb 1
 
 section	.text
    global _start        
-	
 _start:	  
     mov edx, ytre
     mov ebx, indre
     mov ecx, 1
-comp:
-    cmp ecx, edx
+comp1:
+    cmp ecx, ebx
     jl ink
+comp2:
+    cmp ecx, edx
     jg dek
     je fin
-    
-    
 ink:
     inc ecx
-    jmp comp
-	
+    jmp comp1
 dek:    
     dec ecx
-    jmp comp
-
-    
+    jmp comp2
 fin:
-   call nylinje
+   mov eax, ecx
+   add eax, '0'
    mov [num], eax
-   mov eax, SYS_WRITE
+   mov edx, 1
+   mov ecx, num
    mov ebx, STDOUT
-   mov eax,1            
-   int 0x80
+   mov eax, SYS_WRITE
+   int 80h
    
-; Flytt cursor helt til venstre på neste linje
-nylinje:
-	push eax
-	push ebx
-	push ecx
-	push edx
-	mov edx,crlflen
-	mov ecx,crlf
-	mov ebx,STDOUT
-	mov eax,SYS_WRITE
-	int 80h
-	pop edx
-	pop ecx
-	pop ebx
-	pop eax
-	ret
+   mov eax, SYS_EXIT
+   int 80h
