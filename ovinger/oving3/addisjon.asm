@@ -18,7 +18,7 @@ section .bss
 ; Datasegment
 section .data
 	meld db "Skriv to ensifrede tall skilt med mellomrom.",cr,lf
-		db "Summen av tallene maa vaere mindre enn 10.",cr,lf
+		db "Summen av tallene maa vaere mindre enn 18.",cr,lf
 	meldlen equ $ - meld
 	feilmeld db cr,lf, "Skriv kun sifre!",cr,lf
 	feillen equ $ - feilmeld
